@@ -1,22 +1,15 @@
-package main.java.com.companyz.accountmanagementsystem.controller;
+package com.companyz.accountmanagementsystem.controller;
 
 
-import com.companyz.accountmanagementsystem.dto.authdto.AuthRequest;
-import com.companyz.accountmanagementsystem.dto.authdto.AuthResponse;
-import com.companyz.accountmanagementsystem.dto.userdto.UserDtoGet;
-import com.companyz.accountmanagementsystem.dto.userdto.UserDtoPost;
+import com.companyz.accountmanagementsystem.dto.userdto.CreateUserDto;
+import com.companyz.accountmanagementsystem.enums.VerificationStatus;
 import com.companyz.accountmanagementsystem.service.UserService;
-import com.companyz.accountmanagementsystem.util.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/users")
@@ -26,41 +19,44 @@ public class UserController {
     @Autowired
     private final UserService userService;
 
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    @PostMapping
+    public ResponseEntity<?> add(@RequestBody CreateUserDto userDtoPost) {
+        return userService.createUser(userDtoPost);
+    }
 
     @GetMapping
-    public ResponseEntity<List<UserDtoGet>> getAll() {
-        return new ResponseEntity<List<UserDtoGet>>(userService.getAll(), HttpStatus.OK);
+    public ResponseEntity<?> getAll() {
+        return userService.getAll();
     }
 
     @GetMapping("/paginated")
     public ResponseEntity getAllPaginated(Pageable pageable) {
-        return  ResponseEntity.ok(userService.getAllPaginated(pageable));
+        return ResponseEntity.ok(userService.getAllPaginated(pageable));
     }
 
-
-    @PostMapping
-    public ResponseEntity<UserDtoGet> add(@RequestBody UserDtoPost userDtoPost){
-        return new ResponseEntity<UserDtoGet>(userService.add(userDtoPost), HttpStatus.CREATED) ;
-    }
     @GetMapping(path = "{id}")
-    public ResponseEntity<UserDtoGet> get(
+    public ResponseEntity<?> get(
             @PathVariable("id") Long id) {
-        return   new ResponseEntity<UserDtoGet>(userService.get(id),HttpStatus.OK);
+        return userService.get(id);
     }
 
-    @PutMapping(path = "{id}")
-    public ResponseEntity<UserDtoGet> update(
-            @PathVariable("id") Long id,@RequestBody UserDtoPost userDtoPost) {
-        return   new ResponseEntity<UserDtoGet>(userService.update(userDtoPost,id),HttpStatus.OK);
+    @GetMapping("/verification-status/{status}")
+    public ResponseEntity<?> getByVerificationStatus(@PathVariable("status") VerificationStatus status) {
+        return userService.getAllByVerificationStatus(status);
     }
 
-
-    @PutMapping("verify/{userId}")
-    public ResponseEntity<UserDtoGet> setVerification(@PathVariable("userId") Long id) {
-        return new ResponseEntity<>(userService.setVerification(id), HttpStatus.OK);
+    @GetMapping("/verification-status/{status}/paginated")
+    public ResponseEntity<?> getByVerificationStatusPaginated(@PathVariable("status") VerificationStatus status, Pageable pageable) {
+        return userService.getAllByVerificationStatusPaginated(status, pageable);
     }
 
+    @PutMapping("/tfa/{id}")
+    public ResponseEntity<?> enableTfa(@PathVariable("id") Long id) {
+        return userService.enableTfa(id);
+    }
+
+    @PutMapping("/tfa-disable/{id}")
+    public ResponseEntity<?> disableTfa(@PathVariable("id") Long id) {
+        return userService.disableTfa(id);
+    }
 }
