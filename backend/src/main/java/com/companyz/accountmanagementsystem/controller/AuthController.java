@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
+
 @RestController
 @RequestMapping(path = "api/v1/auth")
 @AllArgsConstructor
@@ -17,6 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(path="/login")
+    @PermitAll
     public ResponseEntity<?> generateToken(@RequestBody AuthRequest authRequest) throws Exception {
         return authService.handleLogin(authRequest);
     }
@@ -30,7 +33,7 @@ public class AuthController {
     public ResponseEntity<?> generateResetPasswordLink(@RequestBody GenerateResetLinkDto dto) throws Exception {
         return authService.generateResetPasswordLink(dto.getEmail());
     }
-
+//
     @PutMapping(path="/reset-password/{token}")
     public ResponseEntity<?> resetPassword(@PathVariable("token") String token, @RequestBody ResetPasswordDto resetPasswordDto) throws Exception {
         return authService.confirmResetPasswordToken(token, resetPasswordDto);
