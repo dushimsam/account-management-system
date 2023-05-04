@@ -1,0 +1,4 @@
+INSERT INTO user (id, first_name, last_name, profile_url, gender, email, date_of_birth, verification_status, password, marital_status, tfa_enabled, category, nationality)
+VALUES ('99a9f9e4-4c09-4a4a-96a4-4f72c5d5df2a', 'John', 'Doe', '', 'MALE', 'john.doe@example.com', '1990-01-01', 'UNVERIFIED', '$2y$10$VYRdRJv/Cw7jL57TnTnlH.3qCqoB7z.Qf1X9LYsjoucH1A2wMAFbG', 'MARRIED', false, 'CLIENT', 'RWANDAN');
+INSERT INTO user (id, first_name, last_name, profile_url, gender, email, date_of_birth, verification_status, password, marital_status, tfa_enabled, category, nationality)
+VALUES ('411fc7ea-628a-4140-b8c3-b3a3a22b9520', 'Jane', 'Doe', '', 'FEMALE', 'jane.doe@example.com', '1995-01-01', 'VERIFIED', '$2y$10$eU6j1C6M4NCWH4GmnfB1/OQhKYChpiMLG9Sb2QptDF/pZLYnlzjDe', 'SINGLE', false, 'CLIENT', 'KENYAN');
