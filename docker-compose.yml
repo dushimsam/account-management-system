@@ -1,0 +1,30 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - 4600:4600
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/account_management?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - mysqldb
+  frontend:
+    build: ./client
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+  mysqldb:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: account_management
+    command: mysqld --default-authentication-plugin=mysql_native_password --innodb-use-native-aio=0
+    ports:
+      - 3307:3306
+    volumes:
+      - mysql-db-data:/var/lib/mysql
+volumes:
+  mysql-db-data:
