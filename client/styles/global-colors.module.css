@@ -1,9 +1,9 @@
 
 .globalTextColor{
-    color:#ff5555;
+    color:#51288d;
 }
 .globalHoverBackColor:hover{
-    background-color:#ff5555;
+    background-color:#51288d;
     transition: all 0.4s ease-in-out;
 }
 
@@ -11,5 +11,5 @@
        color:white;
 }
 .globalBackColor{
-    background-color:#ff5555;
+    background-color:#51288d;
 }
