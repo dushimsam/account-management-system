@@ -11,7 +11,7 @@
 3. Run `docker-compose up -d` to start the application
 
 
-#### The client application will be accessible at `http://localhost:3000` and the backend application will be accessible at `http://localhost:4600`.
+The client application will be accessible at `http://localhost:3000` and the backend application will be accessible at `http://localhost:4600`.
 
 #### NOTE
 
@@ -21,6 +21,7 @@ The environment variables for the mail configuration are used, Please ensure tha
 ### MANUAL SETUP
 #### Prerequisites
 - Java 17 installed
+- NodeJs 14 and above installed
 - Maven installed
 - Git installed on your system
 
